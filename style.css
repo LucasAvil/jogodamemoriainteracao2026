@@ -267,3 +267,44 @@ body {
 #retry-btn:hover {
   transform: scale(1.03);
 }
+
+@keyframes matchPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 200, 83, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes cardShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.screen-flash-success {
+  box-shadow: inset 0 0 40px rgba(0, 200, 83, 0.4);
+  transition: box-shadow 0.2s ease;
+}
+
+.card-success {
+  animation: matchPop 0.4s ease-in-out;
+}
+
+.card-error {
+  animation: cardShake 0.4s ease-in-out;
+}

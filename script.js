@@ -79,7 +79,7 @@ const temas = [
   },
 ];
 
-const totalPares = 8; // CORRIGIDO: Total de pares no tabuleiro
+const totalPares = 8;
 let baralho = [];
 
 let primeiraCarta = null;
@@ -122,7 +122,6 @@ function iniciarTimer() {
   }, 1000);
 }
 
-// CORRIGIDO: Formata os 90 segundos em min:seg (ex: 01:30)
 function atualizarTimerDisplay() {
   const timerElement = document.getElementById("timer");
   if (!timerElement) return;
@@ -164,29 +163,41 @@ function verificarPar() {
 function desativarCartas() {
   acertos++;
   document.getElementById("hits").innerText = acertos;
+
+  primeiraCarta.classList.add("card-success");
+  segundaCarta.classList.add("card-success");
+
+  document.body.classList.add("screen-flash-success");
+  setTimeout(() => {
+    document.body.classList.remove("screen-flash-success");
+  }, 400);
+
   resetarJogada();
 
   if (acertos === totalPares) {
     clearInterval(timerInterval);
     bloquearTabuleiro = true;
-    setTimeout(() => {
-      mostrarResultado(true);
-    }, 500);
+    setTimeout(() => mostrarResultado(true), 600);
   }
 }
-
 function desvirarCartas() {
   bloquearTabuleiro = true;
   erros++;
   document.getElementById("errors").innerText = erros;
 
+  primeiraCarta.classList.add("card-error");
+  segundaCarta.classList.add("card-error");
+
   setTimeout(() => {
-    if (primeiraCarta) primeiraCarta.classList.remove("flipped");
-    if (segundaCarta) segundaCarta.classList.remove("flipped");
+    if (primeiraCarta) {
+      primeiraCarta.classList.remove("flipped", "card-error");
+    }
+    if (segundaCarta) {
+      segundaCarta.classList.remove("flipped", "card-error");
+    }
     resetarJogada();
   }, 700);
 }
-
 function resetarJogada() {
   [primeiraCarta, segundaCarta] = [null, null];
   bloquearTabuleiro = false;
