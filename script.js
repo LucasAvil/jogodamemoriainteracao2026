@@ -180,6 +180,7 @@ function desativarCartas() {
     setTimeout(() => mostrarResultado(true), 600);
   }
 }
+
 function desvirarCartas() {
   bloquearTabuleiro = true;
   erros++;
@@ -198,6 +199,7 @@ function desvirarCartas() {
     resetarJogada();
   }, 700);
 }
+
 function resetarJogada() {
   [primeiraCarta, segundaCarta] = [null, null];
   bloquearTabuleiro = false;
@@ -245,14 +247,20 @@ function iniciarJogo() {
     carta.classList.add("card");
     carta.dataset.valor = caminhoImagem;
 
-    carta.innerHTML = `<img src="${caminhoImagem}" alt="Ícone">`;
+    // ESTRUTURA ATUALIZADA PARA SUPORTAR A ANIMAÇÃO 3D
+    carta.innerHTML = `
+      <div class="card-front"></div>
+      <div class="card-back">
+        <img src="${caminhoImagem}" alt="Ícone">
+      </div>
+    `;
 
     carta.addEventListener("click", () => virarCarta(carta));
     cardGrid.appendChild(carta);
   });
 
   iniciarTimer();
-} // CORRIGIDO: Removida a chave extra que estava aqui abaixo
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const startScreen = document.getElementById("start-screen");
