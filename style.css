@@ -107,7 +107,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card img {
@@ -150,6 +150,8 @@ body {
   width: 100%;
   height: 100%;
   border-radius: 8px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,6 +160,7 @@ body {
 .card-front {
   background-color: var(--card);
   transition: background-color 0.2s;
+  transform: rotateY(0deg);
 }
 
 .card:hover .card-front {
@@ -322,41 +325,116 @@ body {
 
 @keyframes matchPop {
   0% {
-    transform: scale(1);
+    transform: rotateY(180deg) scale(1);
   }
   50% {
-    transform: scale(1.1);
+    transform: rotateY(180deg) scale(1.1);
     box-shadow: 0 0 20px rgba(0, 200, 83, 0.8);
   }
   100% {
-    transform: scale(1);
+    transform: rotateY(180deg) scale(1);
   }
 }
 
 @keyframes cardShake {
   0%,
   100% {
-    transform: translateX(0);
+    transform: rotateY(180deg) translateX(0);
   }
   20%,
   60% {
-    transform: translateX(-6px);
+    transform: rotateY(180deg) translateX(-6px);
   }
   40%,
   80% {
-    transform: translateX(6px);
+    transform: rotateY(180deg) translateX(6px);
   }
 }
-
 .screen-flash-success {
   box-shadow: inset 0 0 40px rgba(0, 200, 83, 0.4);
   transition: box-shadow 0.2s ease;
 }
 
 .card-success {
-  animation: matchPop 0.4s ease-in-out;
+  animation: matchPop 0.3s ease-in-out;
 }
 
 .card-error {
-  animation: cardShake 0.4s ease-in-out;
+  animation: cardShake 0.3s ease-in-out;
+}
+
+.roulette-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.roulette-card {
+  width: min(90vw, 420px);
+  padding: 32px 24px;
+  border-radius: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background:
+    linear-gradient(var(--bg-container), var(--bg-container)) padding-box,
+    var(--gradient-upf) border-box;
+  border: 4px solid transparent;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.roulette-card h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.roulette-box {
+  width: 100%;
+  padding: 20px 12px;
+  box-sizing: border-box;
+  background-color: #1a1a1a;
+  color: #ffb700;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #333;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+@keyframes roulettePop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(102, 187, 106, 0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.roulette-box.selected {
+  color: #ffffff;
+  background-color: #005c28;
+  border-color: #66bb6a;
+  animation: roulettePop 0.4s ease-in-out;
 }
