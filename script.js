@@ -161,24 +161,39 @@ function verificarPar() {
 }
 
 function desativarCartas() {
-  acertos++;
-  document.getElementById("hits").innerText = acertos;
+  bloquearTabuleiro = true;
 
-  primeiraCarta.classList.add("card-success");
-  segundaCarta.classList.add("card-success");
-
-  document.body.classList.add("screen-flash-success");
   setTimeout(() => {
-    document.body.classList.remove("screen-flash-success");
-  }, 400);
+    acertos++;
+    document.getElementById("hits").innerText = acertos;
 
-  resetarJogada();
+    const pCarta = primeiraCarta;
+    const sCarta = segundaCarta;
 
-  if (acertos === totalPares) {
-    clearInterval(timerInterval);
-    bloquearTabuleiro = true;
-    setTimeout(() => mostrarResultado(true), 600);
-  }
+    if (pCarta && sCarta) {
+      pCarta.classList.add("card-success");
+      sCarta.classList.add("card-success");
+    }
+
+    document.body.classList.add("screen-flash-success");
+    setTimeout(() => {
+      document.body.classList.remove("screen-flash-success");
+    }, 400);
+
+    setTimeout(() => {
+      if (pCarta && sCarta) {
+        pCarta.classList.remove("card-success");
+        sCarta.classList.remove("card-success");
+      }
+      resetarJogada();
+
+      if (acertos === totalPares) {
+        clearInterval(timerInterval);
+        bloquearTabuleiro = true;
+        setTimeout(() => mostrarResultado(true), 400);
+      }
+    }, 300);
+  }, 250);
 }
 
 function desvirarCartas() {
@@ -186,18 +201,31 @@ function desvirarCartas() {
   erros++;
   document.getElementById("errors").innerText = erros;
 
-  primeiraCarta.classList.add("card-error");
-  segundaCarta.classList.add("card-error");
-
   setTimeout(() => {
-    if (primeiraCarta) {
-      primeiraCarta.classList.remove("flipped", "card-error");
+    const pCarta = primeiraCarta;
+    const sCarta = segundaCarta;
+
+    if (pCarta && sCarta) {
+      pCarta.classList.add("card-error");
+      sCarta.classList.add("card-error");
     }
-    if (segundaCarta) {
-      segundaCarta.classList.remove("flipped", "card-error");
-    }
-    resetarJogada();
-  }, 700);
+
+    setTimeout(() => {
+      if (pCarta && sCarta) {
+        pCarta.classList.remove("card-error");
+        sCarta.classList.remove("card-error");
+        requestAnimationFrame(() => {
+          pCarta.classList.remove("flipped");
+          sCarta.classList.remove("flipped");
+          setTimeout(() => {
+            resetarJogada();
+          }, 300);
+        });
+      } else {
+        resetarJogada();
+      }
+    }, 300);
+  }, 250);
 }
 
 function resetarJogada() {
@@ -221,45 +249,95 @@ function mostrarResultado(venceu) {
   resultScreen.classList.remove("hidden");
 }
 
-function iniciarJogo() {
-  const resultScreen = document.getElementById("result-screen");
-  if (resultScreen) resultScreen.classList.add("hidden");
+function sortearComRoleta(callback) {
+  const rouletteScreen = document.getElementById("roulette-screen");
+  const rouletteText = document.getElementById("roulette-text");
+  const rouletteBox = document.querySelector(".roulette-box");
 
-  acertos = 0;
-  erros = 0;
-  document.getElementById("hits").innerText = acertos;
-  document.getElementById("errors").innerText = erros;
-  resetarJogada();
+  if (!rouletteScreen || !rouletteText) {
+    const temaSorteado = temas[Math.floor(Math.random() * temas.length)];
+    callback(temaSorteado);
+    return;
+  }
+
+  if (rouletteBox) rouletteBox.classList.remove("selected");
+  rouletteScreen.classList.remove("hidden");
 
   const temaSorteado = temas[Math.floor(Math.random() * temas.length)];
+  let index = 0;
+  let velocidade = 50;
+  let voltas = 0;
+  const totalVoltas = 22;
 
-  document.getElementById("theme").innerText = temaSorteado.nome;
+  function girar() {
+    rouletteText.innerText = temas[index].nome;
+    index = (index + 1) % temas.length;
+    voltas++;
 
-  baralho = [...temaSorteado.imagens, ...temaSorteado.imagens];
-  embaralhar(baralho);
+    if (voltas < totalVoltas) {
+      if (voltas > totalVoltas - 6) {
+        velocidade += 40;
+      } else if (voltas > totalVoltas - 10) {
+        velocidade += 20;
+      }
+      setTimeout(girar, velocidade);
+    } else {
+      rouletteText.innerText = temaSorteado.nome;
+      if (rouletteBox) rouletteBox.classList.add("selected");
 
-  const cardGrid = document.querySelector(".card-grid");
-  if (!cardGrid) return;
-  cardGrid.innerHTML = "";
+      setTimeout(() => {
+        rouletteScreen.classList.add("hidden");
+        callback(temaSorteado);
+      }, 900);
+    }
+  }
 
-  baralho.forEach((caminhoImagem) => {
-    const carta = document.createElement("div");
-    carta.classList.add("card");
-    carta.dataset.valor = caminhoImagem;
+  girar();
+}
 
-    // ESTRUTURA ATUALIZADA PARA SUPORTAR A ANIMAÇÃO 3D
-    carta.innerHTML = `
-      <div class="card-front"></div>
-      <div class="card-back">
-        <img src="${caminhoImagem}" alt="Ícone">
-      </div>
-    `;
+function iniciarJogo() {
+  const startScreen = document.getElementById("start-screen");
+  const gameContainer = document.getElementById("game-container");
+  const resultScreen = document.getElementById("result-screen");
 
-    carta.addEventListener("click", () => virarCarta(carta));
-    cardGrid.appendChild(carta);
+  if (startScreen) startScreen.classList.add("hidden");
+  if (resultScreen) resultScreen.classList.add("hidden");
+
+  sortearComRoleta((temaSorteado) => {
+    acertos = 0;
+    erros = 0;
+    document.getElementById("hits").innerText = acertos;
+    document.getElementById("errors").innerText = erros;
+    resetarJogada();
+
+    document.getElementById("theme").innerText = temaSorteado.nome;
+
+    baralho = [...temaSorteado.imagens, ...temaSorteado.imagens];
+    embaralhar(baralho);
+
+    const cardGrid = document.querySelector(".card-grid");
+    if (!cardGrid) return;
+    cardGrid.innerHTML = "";
+
+    baralho.forEach((caminhoImagem) => {
+      const carta = document.createElement("div");
+      carta.classList.add("card");
+      carta.dataset.valor = caminhoImagem;
+
+      carta.innerHTML = `
+        <div class="card-front"></div>
+        <div class="card-back">
+          <img src="${caminhoImagem}" alt="Ícone">
+        </div>
+      `;
+
+      carta.addEventListener("click", () => virarCarta(carta));
+      cardGrid.appendChild(carta);
+    });
+
+    if (gameContainer) gameContainer.classList.remove("hidden");
+    iniciarTimer();
   });
-
-  iniciarTimer();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -271,8 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (startBtn) {
     startBtn.addEventListener("click", () => {
-      startScreen.classList.add("hidden");
-      gameContainer.classList.remove("hidden");
       iniciarJogo();
     });
   }
