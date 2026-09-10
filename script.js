@@ -1,80 +1,80 @@
 const temas = [
   {
     nome: "Linguagens de Programação",
-    imagens: [
-      "assets/prog/python.png",
-      "assets/prog/javascript.png",
-      "assets/prog/csharp.png",
-      "assets/prog/java.png",
-      "assets/prog/php.png",
-      "assets/prog/cpp.png",
-      "assets/prog/ruby.png",
-      "assets/prog/go.png",
+    itens: [
+      { nome: "Python", imagem: "assets/py.png" },
+      { nome: "JavaScript", imagem: "assets/javascript.png" },
+      { nome: "C#", imagem: "assets/C#.png" },
+      { nome: "Java", imagem: "assets/java.png" },
+      { nome: "PHP", imagem: "assets/php.png" },
+      { nome: "C++", imagem: "assets/c++.png" },
+      { nome: "Ruby", imagem: "assets/ruby.png" },
+      { nome: "Go", imagem: "assets/go.png" },
     ],
   },
   {
     nome: "Sistemas Operacionais",
-    imagens: [
-      "assets/so/linux.png",
-      "assets/so/windows.png",
-      "assets/so/macos.png",
-      "assets/so/android.png",
-      "assets/so/ubuntu.png",
-      "assets/so/debian.png",
-      "assets/so/fedora.png",
-      "assets/so/arch.png",
+    itens: [
+      { nome: "Linux", imagem: "assets/linux.png" },
+      { nome: "Windows", imagem: "assets/windows.png" },
+      { nome: "macOS", imagem: "assets/macos.png" },
+      { nome: "Android", imagem: "assets/android.png" },
+      { nome: "Ubuntu", imagem: "assets/ubuntu.png" },
+      { nome: "Debian", imagem: "assets/debian.png" },
+      { nome: "Fedora", imagem: "assets/fedora.png" },
+      { nome: "Arch Linux", imagem: "assets/arch.png" },
     ],
   },
   {
     nome: "Bancos de Dados",
-    imagens: [
-      "assets/bd/mysql.png",
-      "assets/bd/postgres.png",
-      "assets/bd/mongodb.png",
-      "assets/bd/redis.png",
-      "assets/bd/sqlite.png",
-      "assets/bd/oracle.png",
-      "assets/bd/mariadb.png",
-      "assets/bd/sqlserver.png",
+    itens: [
+      { nome: "MySQL", imagem: "assets/mysql.png" },
+      { nome: "PostgreSQL", imagem: "assets/postgres.png" },
+      { nome: "MongoDB", imagem: "assets/mongodb.png" },
+      { nome: "Redis", imagem: "assets/redis.png" },
+      { nome: "SQLite", imagem: "assets/sqlite.png" },
+      { nome: "Oracle", imagem: "assets/oracle.png" },
+      { nome: "MariaDB", imagem: "assets/mariadb.png" },
+      { nome: "SQL Server", imagem: "assets/sqlserver.png" },
     ],
   },
   {
     nome: "Inteligências Artificiais",
-    imagens: [
-      "assets/redes/gemini.png",
-      "assets/redes/copilotmicrosoft.png",
-      "assets/redes/seek.png", 
-      "assets/redes/grok.png",
-      "assets/redes/gpt.png",
-      "assets/redes/claude.png",
-      "assets/redes/gitcopilot.png",
-      "assets/redes/perplexity.png",
+    itens: [
+      { nome: "Gemini", imagem: "assets/gemini.png" },
+      { nome: "Copilot", imagem: "assets/copilotmicrosoft.png" },
+      { nome: "DeepSeek", imagem: "assets/seek.png" },
+      { nome: "Grok", imagem: "assets/grok.png" },
+      { nome: "ChatGPT", imagem: "assets/gpt.png" },
+      { nome: "Claude", imagem: "assets/claude.png" },
+      { nome: "GitHub Copilot", imagem: "assets/gitcopilot.png" },
+      { nome: "Perplexity", imagem: "assets/perplexity.png" },
     ],
   },
   {
     nome: "Desenvolvimento Web",
-    imagens: [
-      "assets/web/html.png",
-      "assets/web/css.png",
-      "assets/web/react.png",
-      "assets/web/vue.png",
-      "assets/web/angular.png",
-      "assets/web/node.png",
-      "assets/web/sass.png",
-      "assets/web/typescript.png",
+    itens: [
+      { nome: "HTML5", imagem: "assets/html.png" },
+      { nome: "CSS3", imagem: "assets/css.png" },
+      { nome: "React", imagem: "assets/react.png" },
+      { nome: "Vue.js", imagem: "assets/vue.png" },
+      { nome: "Angular", imagem: "assets/angular.png" },
+      { nome: "Node.js", imagem: "assets/node.png" },
+      { nome: "Sass", imagem: "assets/sass.png" },
+      { nome: "TypeScript", imagem: "assets/typescript.png" },
     ],
   },
   {
     nome: "Marcas",
-    imagens: [
-      "assets/sec/xiaomi.png",
-      "assets/sec/apple.png",
-      "assets/sec/sansung.png",
-      "assets/sec/nvidia.png",
-      "assets/sec/amd.png",
-      "assets/sec/intel.png",
-      "assets/sec/asus.png",
-      "assets/sec/hp.png",
+    itens: [
+      { nome: "Xiaomi", imagem: "assets/xiaomi.png" },
+      { nome: "Apple", imagem: "assets/apple.png" },
+      { nome: "Samsung", imagem: "assets/samsung.png" },
+      { nome: "NVIDIA", imagem: "assets/nvidia.png" },
+      { nome: "AMD", imagem: "assets/amd.png" },
+      { nome: "Intel", imagem: "assets/intel.png" },
+      { nome: "ASUS", imagem: "assets/asus.png" },
+      { nome: "HP", imagem: "assets/hp.png" },
     ],
   },
 ];
@@ -88,7 +88,7 @@ let bloquearTabuleiro = false;
 let acertos = 0;
 let erros = 0;
 
-let tempoRestante = 90;
+let tempoRestante = 60;
 let timerInterval = null;
 
 function embaralhar(array) {
@@ -100,7 +100,7 @@ function embaralhar(array) {
 
 function iniciarTimer() {
   clearInterval(timerInterval);
-  tempoRestante = 90;
+  tempoRestante = 60;
   atualizarTimerDisplay();
 
   timerInterval = setInterval(() => {
@@ -312,22 +312,23 @@ function iniciarJogo() {
 
     document.getElementById("theme").innerText = temaSorteado.nome;
 
-    baralho = [...temaSorteado.imagens, ...temaSorteado.imagens];
+    baralho = [...temaSorteado.itens, ...temaSorteado.itens];
     embaralhar(baralho);
 
     const cardGrid = document.querySelector(".card-grid");
     if (!cardGrid) return;
     cardGrid.innerHTML = "";
 
-    baralho.forEach((caminhoImagem) => {
+    baralho.forEach((item) => {
       const carta = document.createElement("div");
       carta.classList.add("card");
-      carta.dataset.valor = caminhoImagem;
+      carta.dataset.valor = item.nome;
 
       carta.innerHTML = `
         <div class="card-front"></div>
         <div class="card-back">
-          <img src="${caminhoImagem}" alt="Ícone">
+          <img src="${item.imagem}" alt="${item.nome}">
+          <span class="card-label">${item.nome}</span>
         </div>
       `;
 
