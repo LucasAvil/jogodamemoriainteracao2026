@@ -240,7 +240,7 @@ function mostrarResultado(venceu) {
 
   if (venceu) {
     resultTitle.innerText = "Excelente!!";
-    resultMessage.innerText = `Boa GOAT, você completou o jogo com ${erros} erro(s)!`;
+    resultMessage.innerText = `Boa GOAT, você completou o jogo com ${erros} erros!`;
   } else {
     resultTitle.innerText = "Fim de Jogo!";
     resultMessage.innerText = "Não desista, eu confio no seu potencial!";
