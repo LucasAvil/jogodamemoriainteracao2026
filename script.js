@@ -71,7 +71,7 @@ const temas = [
       { nome: "Apple", imagem: "assets/apple.png" },
       { nome: "Samsung", imagem: "assets/samsung.png" },
       { nome: "NVIDIA", imagem: "assets/nvidia.png" },
-      { nome: "AMD", imagem: "assets/amd.png" },
+      { nome: "AMD", imagem: "assets/Amd.png" },
       { nome: "Intel", imagem: "assets/intel.png" },
       { nome: "ASUS", imagem: "assets/asus.png" },
       { nome: "HP", imagem: "assets/hp.png" },
