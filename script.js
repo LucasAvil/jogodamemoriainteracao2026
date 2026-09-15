@@ -4,7 +4,7 @@ const temas = [
     itens: [
       { nome: "Python", imagem: "assets/py.png" },
       { nome: "JavaScript", imagem: "assets/javascript.png" },
-      { nome: "C#", imagem: "assets/C#.png" },
+      { nome: "C#", imagem: "assets/csharp.png" },
       { nome: "Java", imagem: "assets/java.png" },
       { nome: "PHP", imagem: "assets/php.png" },
       { nome: "C++", imagem: "assets/c++.png" },
