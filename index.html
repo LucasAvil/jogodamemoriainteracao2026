@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jogo da Memória - Ciência da Computação</title>
+    <title>Jogo da Memória - Computação UPF</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,46 +14,182 @@
   </head>
   <body>
     <div id="start-screen" class="start-screen">
-      <h1>Jogo da Memória</h1>
-      <p>Ciência da Computação — UPF</p>
-      <button id="start-btn">JOGAR</button>
-    </div>
-    <div id="game-container" class="game-container hidden">
-      <header class="dashboard">
-        <div class="stats-left">
-          <p>Acertos: <span id="hits">0</span></p>
-          <p>Erros: <span id="errors">0</span></p>
-        </div>
-
-        <div class="theme-info">
-          <span>Tema Selecionado:</span>
-          <h2 id="theme">Computação</h2>
-        </div>
-
-        <div class="dashboard-right">
-          <div class="timer-box">
-            <span id="timer">01:30</span>
-          </div>
-          <button id="reset-btn">Reiniciar</button>
-        </div>
+      <header class="start-header">
+        <h1>Jogo da Memória</h1>
+        <p>Universidade de Passo Fundo — UPF</p>
       </header>
 
-      <main class="card-grid"></main>
+      <div class="start-layout">
+        <aside class="courses-sidebar">
+          <h3>Venha cursar na UPF:</h3>
+          <ul class="courses-list">
+            <li>
+              <span class="course-badge">CC</span>
+              <span>Ciência da Computação</span>
+            </li>
+            <li>
+              <span class="course-badge">ADS</span>
+              <span>Análise e Desenvolvimento de Sistemas</span>
+            </li>
+            <li>
+              <span class="course-badge">EC</span>
+              <span>Engenharia da Computação</span>
+            </li>
+          </ul>
+        </aside>
+
+        <main class="start-center">
+          <button id="start-btn">JOGAR</button>
+        </main>
+
+        <aside class="leaderboard-sidebar">
+          <h3>Placar de Líderes</h3>
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="global">Global</button>
+            <button class="tab-btn" data-tab="tournament">Torneio</button>
+          </div>
+          <div class="tournament-info-bar hidden">
+            <span class="tournament-title-display"></span>
+          </div>
+          <div class="leaderboard-header">
+            <span>Pos.</span>
+            <span>Nome</span>
+            <span>Tempo</span>
+            <span>Erros</span>
+          </div>
+          <ol id="start-leaderboard-list" class="leaderboard-list"></ol>
+          <div class="tournament-footer">
+            <button class="create-tournament-btn hidden">Criar</button>
+            <button class="delete-tournament-btn hidden">
+              Finalizar Torneio
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div id="game-container" class="game-container hidden">
+      <div class="game-wrapper">
+        <div class="game-main">
+          <header class="dashboard">
+            <div class="stats-left">
+              <p>Acertos: <span id="hits">0</span></p>
+              <p>Erros: <span id="errors">0</span></p>
+            </div>
+
+            <div class="theme-info">
+              <span>Tema:</span>
+              <h2 id="theme">Computação</h2>
+            </div>
+
+            <div class="dashboard-right">
+              <div class="timer-box">
+                <span id="timer">01:30</span>
+              </div>
+              <button id="reset-btn">Reiniciar</button>
+            </div>
+          </header>
+
+          <main class="card-grid"></main>
+        </div>
+
+        <aside id="leaderboard" class="leaderboard-sidebar">
+          <h3>Placar de Líderes</h3>
+          <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="global">Global</button>
+            <button class="tab-btn" data-tab="tournament">Torneio</button>
+          </div>
+          <div class="tournament-info-bar hidden">
+            <span class="tournament-title-display"></span>
+          </div>
+          <div class="leaderboard-header">
+            <span>Pos.</span>
+            <span>Nome</span>
+            <span>Tempo</span>
+            <span>Erros</span>
+          </div>
+          <ol id="game-leaderboard-list" class="leaderboard-list"></ol>
+          <div class="tournament-footer">
+            <button class="create-tournament-btn hidden">Criar</button>
+            <button class="delete-tournament-btn hidden">
+              Finalizar Torneio
+            </button>
+          </div>
+        </aside>
+      </div>
     </div>
 
     <div id="result-screen" class="result-screen hidden">
       <div class="result-card">
-        <h2 id="result-title">Fim de Jogo!</h2>
-        <p id="result-message">O tempo acabou.</p>
-        <button id="retry-btn">Tentar Novamente</button>
+        <h2 id="result-title">Acabou o jogo!</h2>
+        <p id="result-message">Você ficou sem tempo!!!.</p>
+
+        <div id="name-input-container" class="name-input-container hidden">
+          <p>Boa, tá no top 10!!!!</p>
+          <input
+            type="text"
+            id="player-name-input"
+            placeholder="Digite seu nome"
+            maxlength="12"
+          />
+          <button id="save-score-btn">Salvar Pontuação</button>
+        </div>
+
+        <button id="retry-btn">Voltar ao Menu Inicial</button>
       </div>
     </div>
+
     <div id="roulette-screen" class="roulette-screen hidden">
       <div class="roulette-card">
-        <h2>Tema Selecionado:</h2>
+        <h2>Tema Sorteado:</h2>
         <div class="roulette-box">
           <span id="roulette-text">Sorteando...</span>
         </div>
+      </div>
+    </div>
+
+    <!-- Tela de Resultado do Torneio -->
+    <div id="tournament-result-screen" class="tournament-result-screen hidden">
+      <div class="tournament-result-card">
+        <h2>Resultado do Torneio</h2>
+        <h3 id="tournament-result-title">Nome do Torneio</h3>
+        <p class="top3-subtitle">Top 3 Jogadores</p>
+        <ol id="tournament-top3-list" class="top3-list"></ol>
+        <button id="tournament-home-btn">Voltar ao Menu Inicial</button>
+      </div>
+    </div>
+
+    <div id="create-tournament-screen" class="result-screen hidden">
+      <div class="result-card">
+        <h2>Criar Torneio</h2>
+        <div class="name-input-container">
+          <p>Informe o nome do torneio:</p>
+          <input
+            type="text"
+            id="tournament-name-input"
+            placeholder="Ex: Torneio UPF 2026"
+            maxlength="20"
+          />
+          <button id="confirm-create-tournament-btn">Criar Torneio</button>
+        </div>
+        <button id="cancel-create-tournament-btn" class="secondary-btn">
+          Cancelar
+        </button>
+      </div>
+    </div>
+
+    <div id="confirm-tournament-screen" class="result-screen hidden">
+      <div class="result-card">
+        <h2>Encerrar Torneio</h2>
+        <p id="confirm-tournament-message">
+          Deseja realmente finalizar o torneio?
+        </p>
+        <button id="confirm-end-tournament-btn" class="delete-tournament-btn">
+          Finalizar e Ver Pódio
+        </button>
+        <button id="cancel-end-tournament-btn" class="secondary-btn">
+          Cancelar
+        </button>
       </div>
     </div>
 
